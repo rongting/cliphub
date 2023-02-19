@@ -17,7 +17,7 @@
 <body>
     <div class="container-fluid" style="margin-left: 64px; margin-top: 32px;">
         <div class="row">
-            <div class="col-xs-6 col-md-4">
+            <div class="col-xs-8 col-md-6">
                 <h2 style="margin-bottom: 32px;">Message sync</h2>
                 <div>
                     <div class="form-group">
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-inline form-group" style="margin-top: 64px;">
+                <div class="form-inline form-group" style="margin-top: 32px;">
                     <div class="form-group">
                         <label for="token-message">Token</label>
                         <input type="text" class="form-control" id="token-message"/>
@@ -44,8 +44,9 @@
                     <textarea class="form-control" rows="5" id="received-message" readonly></textarea>
                 </div>
             </div>
-            <div class="col-md-1"></div>
-            <div class="col-xs-6 col-md-4">
+        </div>
+        <div class="row" style="margin-top: 64px;">
+            <div class="col-xs-8 col-md-6">
                 <h2 style="margin-bottom: 32px;">File sync</h2>
                 <div>
                     <div class="form-group">
@@ -56,12 +57,12 @@
                         <div class="col-md-1">
                             <button type="submit" class="btn btn-primary" id="upload">Upload</button>
                         </div>
-                        <div class="col-md-1" style="margin-left: 16px;">
+                        <div class="col-md-1">
                             <h2 id="generated-token-file" style="display: inline;"></h2>
                         </div>
                     </div>
                 </div>
-                <div class="form-inline form-group" style="margin-top: 64px;">
+                <div class="form-inline form-group" style="margin-top: 32px;">
                     <div class="form-group">
                         <label for="token-file">Token</label>
                         <input type="text" class="form-control" id="token-file"/>
