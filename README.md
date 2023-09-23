@@ -8,3 +8,5 @@ A cross-device web app to allow user sync messages and files.
 # How to build and deploy
 Recommend to use docker to build and deploy:
 1. Run `make` to generate docker image in local
+2. Run `docker push forzart/cliphub-scratch:latest` to push you local image to dockerhub
+3. Run `docker run -d --name cliphub-scratch -p 1122:9000/tcp --restart=always -w /home/golab/cliphub forzart/cliphub-scratch` to run container
