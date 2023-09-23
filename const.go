@@ -11,6 +11,10 @@ const (
 	FILE    ContentType = 1
 )
 
+var MessageKey = "message"
+
+var FileKey = "file"
+
 // kv map to store message
 var MessageKV = new(sync.Map)
 
@@ -23,4 +27,4 @@ var Expire = time.Minute * 30
 // Max length of kv map
 var MaxLength = 1000
 
-var FilesDir = "./files/"
+var FilesDir = "./files"

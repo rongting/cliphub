@@ -31,42 +31,41 @@ func main() {
 
 	router.POST("/send", func(c *gin.Context) {
 		message := c.PostForm("message")
-		token := generateToken(MESSAGE)
-		ok, errormsg := Set(token, message, MESSAGE)
+		ok, errormsg := Set(MessageKey, message, MESSAGE)
 		if ok {
-			c.String(http.StatusOK, token)
+			c.String(http.StatusOK, "OK")
 		} else {
 			c.String(http.StatusForbidden, errormsg)
 		}
 	})
 
 	router.POST("/receive", func(c *gin.Context) {
-		token := c.PostForm("token")
-		message := Get(token, MESSAGE)
+		message := Get(MessageKey, MESSAGE)
 		c.String(http.StatusOK, message)
 	})
 
 	router.POST("/upload", func(c *gin.Context) {
-		token := generateToken(FILE)
-		err := os.MkdirAll(FilesDir+ token, os.ModeDir)
+		err := os.RemoveAll(FilesDir)
+		if err != nil {
+			fmt.Println(err)
+		}
+		err = os.Mkdir(FilesDir, os.ModeDir)
 		if err != nil {
 			c.String(http.StatusInternalServerError, "Create directory failed")
 			return
 		}
 		file, _ := c.FormFile("fileName")
-		if err := c.SaveUploadedFile(file, FilesDir+ token + "/" + file.Filename); err != nil {
+		if err := c.SaveUploadedFile(file, FilesDir + "/" + file.Filename); err != nil {
 			fmt.Println(err)
 			c.String(http.StatusInternalServerError, "Save file failed")
 			return
 		}
-		c.String(http.StatusOK, token)
-		Set(token, file.Filename, FILE)
+		Set(FileKey, file.Filename, FILE)
+		c.String(http.StatusOK, "OK")
 	})
 
 	router.GET("/download", func(c *gin.Context) {
-		token := c.Query("token")
-		fmt.Println("token: ", token)
-		fileName := Get(token, FILE)
+		fileName := Get(FileKey, FILE)
 		fmt.Println("filename: ", fileName)
 		if fileName == "" {
 			c.String(http.StatusForbidden, "No record found for token")
@@ -75,7 +74,7 @@ func main() {
 		c.Header("Content-Type", "application/octet-stream")
 		c.Header("Content-Disposition", "attachment; filename="+fileName)
 		c.Header("Content-Transfer-Encoding", "binary")
-		c.File(FilesDir + token + "/" + fileName)
+		c.File(FilesDir + "/" + fileName)
 	})
 
 	router.Run(":9000")

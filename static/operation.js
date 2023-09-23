@@ -12,11 +12,7 @@ $(document).ready(function(){
     });
 
     $("#receive").click(function() {
-        var token = $("#token-message").val();
-        $.post("/receive",
-            {
-                token: token
-            },
+        $.post("/receive", null,
             function(data, status){
                 $("#received-message").text(data);
             });
@@ -41,7 +37,6 @@ $(document).ready(function(){
     });
 
     $("#download").click(function() {
-        var token = $("#token-file").val();
-        window.location.href = "/download?token=" + token;
+        window.location.href = "/download";
     });
 });

@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"os"
 	"sync"
-	"time"
 )
 
 func Set(key string, value string, t ContentType) (bool, string) {
@@ -13,15 +10,6 @@ func Set(key string, value string, t ContentType) (bool, string) {
 		return false, "Error: Reach max length"
 	}
 	kv.Store(key, value)
-	time.AfterFunc(Expire, func() {
-		kv.Delete(key)
-		if t == FILE {
-			err := os.RemoveAll(FilesDir + key)
-			if err != nil {
-				fmt.Println("Delete expired file failed", err)
-			}
-		}
-	})
 	return true, ""
 }
 
